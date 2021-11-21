@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.BnB2022;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -50,7 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // CHAWKS: Name it something useful!
 @Autonomous(name="BnB_Auto_DriveByEncoder", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
-//@Disabled
+@Disabled
 public class BnB_Auto_DriveByEncoder extends LinearOpMode {
 
     /* CHAWKS: Call and declare the robot here */

@@ -154,7 +154,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
             rightFrontDrive.setPower(-drivePower);
 
         }
-        else if(gamepad1.left_stick_x < 0.0)
+        else if(gamepad1.left_stick_x > 0.0) // <0.0
         {
             leftBackDrive.setPower(drivePower);
             rightBackDrive.setPower(-drivePower);
@@ -162,7 +162,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
             rightFrontDrive.setPower(-drivePower);
 
         }
-        else if(gamepad1.left_stick_x > 0.0)
+        else if(gamepad1.left_stick_x < 0.0) // >0.0
         {
             leftBackDrive.setPower(-drivePower);
             rightBackDrive.setPower(drivePower);
@@ -242,15 +242,15 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
 
     private void initializeDriveMotor()
     {
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "LeftFrontDrive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "RightFrontDrive");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "LeftBackDrive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "RightBackDrive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "LeftFrontDrive");  //LeftFrontDrive
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "RightFrontDrive"); //RightFrontDrive
+        leftBackDrive = hardwareMap.get(DcMotor.class, "LeftBackDrive"); //LeftBackDrive
+        rightBackDrive = hardwareMap.get(DcMotor.class, "RightBackDrive"); //RightBackDrive
 
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);  //REVERSE
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);   //REVERSE
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);  //FORWARD
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);   //FORWARD
 
         leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
