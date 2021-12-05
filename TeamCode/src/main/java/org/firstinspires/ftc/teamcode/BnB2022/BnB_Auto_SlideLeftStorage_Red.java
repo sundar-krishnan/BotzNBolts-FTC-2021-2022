@@ -47,10 +47,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  */
 // CHAWKS: Name it something useful!
-@Autonomous(name="BnB_Auto_RightCarousel", group="RedTest")
+@Autonomous(name="BnB_Auto_SlideLeftStorage_Red", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
-public class BnB_Auto_RightCarousel extends LinearOpMode {
+public class BnB_Auto_SlideLeftStorage_Red extends LinearOpMode {
 
     /* CHAWKS: Call and declare the robot here */
 //    HardwareMap_Example     robot   = new HardwareMap_Example();   // Use a Pushbot's hardware
@@ -146,12 +146,8 @@ public class BnB_Auto_RightCarousel extends LinearOpMode {
 //        encoderDrive(FORWARD, DRIVE_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(LEFT, TURN_SPEED, 12, 12, 5.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
-        encoderDrive(RIGHTSLIDE, DRIVE_SPEED, 14, 14, 0.595);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderDrive(LEFTSLIDE, DRIVE_SPEED, 14, 14, 1.1);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(200);     // pause
-        RingRollerDrive(3);
-        sleep(40);     // pause
-        encoderDrive(FORWARD, DRIVE_SPEED, 10, 10, 0.57);  // S3: Reverse 24 Inches with 4 Sec timeout
-        sleep(5);     // pause
         openGrabberClaw(1);
         sleep(40);     // pause
 //        encoderDrive(LEFT, TURN_SPEED,  12,  12, 1);  // S1: Forward 47 Inches with 5 Sec timeout

@@ -33,7 +33,6 @@ package org.firstinspires.ftc.teamcode.BnB2022;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -48,10 +47,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  */
 // CHAWKS: Name it something useful!
-@Autonomous(name="BnB_Auto_LeftCarousel", group="RedTest")
+@Autonomous(name="BnB_Auto_SlideRightStorage_Blue", group="RedTest")
 // CHAWKS: What does @Disabled mean? what happens if we remove it?
 //@Disabled
-public class BnB_Auto_LeftCarousel extends LinearOpMode {
+public class BnB_Auto_SlideRightStorage_Blue extends LinearOpMode {
 
     /* CHAWKS: Call and declare the robot here */
 //    HardwareMap_Example     robot   = new HardwareMap_Example();   // Use a Pushbot's hardware
@@ -77,10 +76,10 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
     static final double     COUNTS_PER_MOTOR_REV    = 480 ;    // eg: TETRIX Motor Encoder 20:1
     static final double     DRIVE_GEAR_REDUCTION    = 0.05 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.85 ;     // For figuring circumference
-//    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    //    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
 //                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     QTR_TURN         = (COUNTS_PER_MOTOR_REV) / 4;
 
     static final double     DRIVE_SPEED             = 1.00;
@@ -114,8 +113,8 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
     // MUST HAVE
     @Override
     public void runOpMode() {
-         // Initialize the drive system variables.
-         // The init() method of the hardware class does all the work here
+        // Initialize the drive system variables.
+        // The init() method of the hardware class does all the work here
         /*
             CHAWKS: On Driver Station, telemetry will be display!
                     Why is this good for the Drivers?
@@ -147,17 +146,8 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
 //        encoderDrive(FORWARD, DRIVE_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(LEFT, TURN_SPEED, 12, 12, 5.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
-        encoderDrive(BACKWARD, DRIVE_SPEED, 2, 2, 0.1);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderDrive(RIGHTSLIDE, DRIVE_SPEED, 14, 14, 1.1);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(200);     // pause
-        encoderDrive(LEFT, TURN_SPEED,  10,  10, 0.58);  // S1: Forward 47 Inches with 5 Sec timeout
-        sleep(100);     // pause
-        encoderDrive(BACKWARD, DRIVE_SPEED, 12, 12, 0.65);  // S3: Reverse 24 Inches with 4 Sec timeout
-        sleep(20);     // pause
-        RingRollerDrive(5);
-        sleep(400);     // pause
-        encoderDrive(LEFTSLIDE, DRIVE_SPEED, 12, 12, 1.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        encoderDrive(BACKWARD, DRIVE_SPEED, 12, 12, 0.3);  // S3: Reverse 24 Inches with 4 Sec timeout
-        sleep(5);     // pause
         openGrabberClaw(1);
         sleep(40);     // pause
 //        encoderDrive(LEFT, TURN_SPEED,  12,  12, 1);  // S1: Forward 47 Inches with 5 Sec timeout
@@ -169,7 +159,7 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
 //        encoderDrive(RIGHT, TURN_SPEED,  12,  12, 1);  // S1: Forward 47 Inches with 5 Sec timeout
 //        sleep(500);     // pause
 //        throwDrive(5);
- //       encoderDrive(BACKWARD, TURN_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
+        //       encoderDrive(BACKWARD, TURN_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();
@@ -186,8 +176,8 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
      *  3) Driver stops the opmode running.
      */
     public void encoderDrive( String direction, double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+                              double leftInches, double rightInches,
+                              double timeoutS) {
         int newLeftFrontTarget;
         int newLeftBackTarget;
         int newRightFrontTarget;
@@ -200,7 +190,7 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
          */
         if (opModeIsActive()) {
 
-           //reset all encoder values
+            //reset all encoder values
             leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -316,15 +306,15 @@ public class BnB_Auto_LeftCarousel extends LinearOpMode {
 
 //              sleep(5000);   // optional pause after each move
 //
-                // keep looping while we are still active, and there is time left, and both motors are running.
+            // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
             // its target position, the motion will stop.  This is "safer" in the event that the robot will
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()))
+                    (runtime.seconds() < timeoutS) &&
+                    (leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()))
 //            while (leftBackDrive.isBusy() &&
 //                       (runtime.seconds() < timeoutS))
             {

@@ -86,7 +86,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
     double speedAdjust =7.0;
     double  position = 0.0; //(MAX_POS - MIN_POS) / 2; // Start at halfway position
     double  positionWrist = 5.0;
-    double armMotorPower=1.0;
+    double armMotorPower=0.4;
     int targetPosition = 0;
     double drivePower = 0.5;
 
@@ -206,12 +206,12 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
         if ( gamepad1.dpad_down  )
         {
 //            targetPosition += 30;
-            armMotorPower = 0.3;
+            armMotorPower = 0.4;
         }
         else if (gamepad1.dpad_up )
         {
 //            targetPosition -= 30;
-            armMotorPower = -0.3;
+            armMotorPower = -0.4;
         }
         else
         {
@@ -286,9 +286,9 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
     private void RingRollerDrive()
     {
         if (gamepad1.left_bumper)
-            ringrollerDrive.setPower(-1.0);
+            ringrollerDrive.setPower(-0.2);
         else if(gamepad1.right_bumper)
-            ringrollerDrive.setPower(1.0);
+            ringrollerDrive.setPower(0.2);
         else
             ringrollerDrive.setPower(0.0);
     }
