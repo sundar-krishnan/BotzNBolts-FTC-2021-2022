@@ -390,9 +390,9 @@ public class BnB_Auto_RightCarousel_Blue extends LinearOpMode {
 
     private void initializeGrabberServoMotor()
     {
-        leftGrabberServo = hardwareMap.get(Servo.class, "LeftGrabber");
-        leftGrabberServo.setDirection(Servo.Direction.FORWARD);
-        leftGrabberServo.setPosition(MAX_POS);
+//        leftGrabberServo = hardwareMap.get(Servo.class, "LeftGrabber");
+//        leftGrabberServo.setDirection(Servo.Direction.FORWARD);
+//        leftGrabberServo.setPosition(MAX_POS);
 
         rightGrabberServo = hardwareMap.get(Servo.class, "RightGrabber");
         rightGrabberServo.setDirection(Servo.Direction.REVERSE);
@@ -431,11 +431,12 @@ public class BnB_Auto_RightCarousel_Blue extends LinearOpMode {
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < timeoutS))
             {
-                telemetry.addData("OpenGrabber", "OpenGrabberDIRleft: " + leftGrabberServo.getDirection() + " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
+//                telemetry.addData("OpenGrabber", "OpenGrabberDIRleft: " + leftGrabberServo.getDirection() + " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
+                telemetry.addData("OpenGrabber",  " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
                 telemetry.update();
             }
 
-            leftGrabberServo.setPosition(MIN_POS);
+//            leftGrabberServo.setPosition(MIN_POS);
             rightGrabberServo.setPosition(MIN_POS);
         }
 

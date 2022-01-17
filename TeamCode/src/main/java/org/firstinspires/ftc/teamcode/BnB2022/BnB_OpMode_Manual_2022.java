@@ -79,7 +79,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
     static final double INCREMENTWRIST = 0.1;
     static final int    CYCLE_MS  =  100;     // period of each cycle
     static final double MAX_POS   =  1.0;     // Maximum rotational position
-    static final double MIN_POS   =  0.35;     // Minimum rotational
+    static final double MIN_POS   =  0.20;     // Minimum rotational
     static final double MIN_POS_RIGHT   =  0.40;     // Minimum rotational position
     static final double MAX_POS_WRIST   =  0.3;     // Maximum rotational position
     static final double MIN_POS_WRIST    =  0.8;     // Minimum rotational position
@@ -124,7 +124,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
             telemetry.addData("Drive Motor Back", "left (%.2f), right (%.2f)", leftBackDrive.getPower(), rightBackDrive.getPower());
             telemetry.addData("speedAdjust","speed (%.2f)",  speedAdjust);
             telemetry.addData("Gamepad1 button pressed", gamepad1.getRobocolMsgType());
-            telemetry.addData("ServoMotors", "left (%.2f), right (%.2f)", leftGrabberServo.getPosition(), rightGrabberServo.getPosition());
+//            telemetry.addData("ServoMotors", "left (%.2f), right (%.2f)", leftGrabberServo.getPosition(), rightGrabberServo.getPosition());
             telemetry.addData("ArmTargetPosition", "ArmTargetPosition: " + armLifter.getTargetPosition());
             telemetry.addData("ArmTargetPosition", "ArmGetcurrentPosition: " + armLifter.getCurrentPosition());
             telemetry.addData("armLifterDirection", "ArmLifterDirection: " + armLifter.getDirection());
@@ -295,9 +295,9 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
 
     private void initializeGrabberServoMotor()
     {
-        leftGrabberServo = hardwareMap.get(Servo.class, "LeftGrabber");
-        leftGrabberServo.setDirection(Servo.Direction.FORWARD);
-        leftGrabberServo.setPosition(MIN_POS);
+//        leftGrabberServo = hardwareMap.get(Servo.class, "LeftGrabber");
+//        leftGrabberServo.setDirection(Servo.Direction.FORWARD);
+//        leftGrabberServo.setPosition(MIN_POS);
 
         rightGrabberServo = hardwareMap.get(Servo.class, "RightGrabber");
         rightGrabberServo.setDirection(Servo.Direction.REVERSE);
@@ -343,7 +343,7 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
             }
         }
         // Set the servo to the new position and pause;
-        leftGrabberServo.setPosition(position);
+//        leftGrabberServo.setPosition(position);
         rightGrabberServo.setPosition(position);
     }
 
