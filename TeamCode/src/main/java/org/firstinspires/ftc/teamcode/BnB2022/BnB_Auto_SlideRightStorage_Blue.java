@@ -427,7 +427,7 @@ public class BnB_Auto_SlideRightStorage_Blue extends LinearOpMode {
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < timeoutS))
             {
-                telemetry.addData("OpenGrabber", "OpenGrabberDIRleft: " + leftGrabberServo.getDirection() + " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
+//                telemetry.addData("OpenGrabber", "OpenGrabberDIRleft: " + leftGrabberServo.getDirection() + " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
                 telemetry.addData("OpenGrabber",  " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
                 telemetry.update();
             }
