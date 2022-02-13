@@ -131,6 +131,7 @@ public class BnB_Auto_SlideLeftStorage_Red extends LinearOpMode {
         initializeDriveMotor();
         initializeGrabberServoMotor();
         initializeRingRollerMotor();
+        initializeArmMotor();
         // Send telemetry message to "Driver Station" signify robot waiting;
         telemetry.addData("Status: ", "Hit [PLAY] to start!");    //
         telemetry.update();
@@ -146,6 +147,9 @@ public class BnB_Auto_SlideLeftStorage_Red extends LinearOpMode {
 //        encoderDrive(FORWARD, DRIVE_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(LEFT, TURN_SPEED, 12, 12, 5.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
+        armLifter.setPower(-0.4);
+        sleep(200);
+        armLifter.setPower(0.0);
         encoderDrive(LEFTSLIDE, DRIVE_SPEED, 14, 14, 1.1);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(200);     // pause
         openGrabberClaw(1);
@@ -438,4 +442,10 @@ public class BnB_Auto_SlideLeftStorage_Red extends LinearOpMode {
 
     }
 
+    private void initializeArmMotor() {
+        armLifter = hardwareMap.get(DcMotor.class, "ArmLifter");
+        armLifter.setDirection(DcMotor.Direction.FORWARD);
+        armLifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armLifter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
 }

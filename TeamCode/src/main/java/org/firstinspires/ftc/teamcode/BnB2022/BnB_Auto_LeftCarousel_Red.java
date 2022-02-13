@@ -55,7 +55,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 
     /* CHAWKS: Call and declare the robot here */
 //    HardwareMap_Example     robot   = new HardwareMap_Example();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -74,35 +74,35 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
      */
 //    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder 60:1
 //    static final double     COUNTS_PER_MOTOR_REV    = 960 ;    // eg: TETRIX Motor Encoder 40:1
-    static final double     COUNTS_PER_MOTOR_REV    = 480 ;    // eg: TETRIX Motor Encoder 20:1
-    static final double     DRIVE_GEAR_REDUCTION    = 0.05 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 3.85 ;     // For figuring circumference
-//    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 480;    // eg: TETRIX Motor Encoder 20:1
+    static final double DRIVE_GEAR_REDUCTION = 0.05;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 3.85;     // For figuring circumference
+    //    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
 //                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     QTR_TURN         = (COUNTS_PER_MOTOR_REV) / 4;
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double QTR_TURN = (COUNTS_PER_MOTOR_REV) / 4;
 
-    static final double     DRIVE_SPEED             = 1.00;
-    static final double     TURN_SPEED              = 0.5;
-    static final String     LEFT                    = "LEFT";
-    static final String     RIGHT                   = "RIGHT";
-    static final String     FORWARD                 = "FORWARD";
-    static final String     BACKWARD                = "BACKWARD";
-    static final String     LEFTSLIDE               = "LEFTSLIDE";
-    static final String     RIGHTSLIDE              = "RIGHTSLIDE";
+    static final double DRIVE_SPEED = 1.00;
+    static final double TURN_SPEED = 0.5;
+    static final String LEFT = "LEFT";
+    static final String RIGHT = "RIGHT";
+    static final String FORWARD = "FORWARD";
+    static final String BACKWARD = "BACKWARD";
+    static final String LEFTSLIDE = "LEFTSLIDE";
+    static final String RIGHTSLIDE = "RIGHTSLIDE";
     private double servoPosition = 0.0;
     static final double INCREMENT = 0.05;     // amount to slew servo each CYCLE_MS cycle
     static final double INCREMENTWRIST = 0.1;
-    static final int    CYCLE_MS  =  100;     // period of each cycle
-    static final double MAX_POS   =  1.0;     // Maximum rotational position
-    static final double MIN_POS   =  0.35;     // Minimum rotational position
-    static final double MAX_POS_WRIST   =  0.3;     // Maximum rotational position
-    static final double MIN_POS_WRIST    =  0.8;     // Minimum rotational position
-    double speedAdjust =7.0;
-    double  position = 0.0; //(MAX_POS - MIN_POS) / 2; // Start at halfway position
-    double  positionWrist = 5.0;
-    double armMotorPower=1.0;
+    static final int CYCLE_MS = 100;     // period of each cycle
+    static final double MAX_POS = 1.0;     // Maximum rotational position
+    static final double MIN_POS = 0.35;     // Minimum rotational position
+    static final double MAX_POS_WRIST = 0.3;     // Maximum rotational position
+    static final double MIN_POS_WRIST = 0.8;     // Minimum rotational position
+    double speedAdjust = 7.0;
+    double position = 0.0; //(MAX_POS - MIN_POS) / 2; // Start at halfway position
+    double positionWrist = 5.0;
+    double armMotorPower = 1.0;
     int targetPosition = 0;
     double drivePower = 0.5;
 
@@ -114,8 +114,8 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
     // MUST HAVE
     @Override
     public void runOpMode() {
-         // Initialize the drive system variables.
-         // The init() method of the hardware class does all the work here
+        // Initialize the drive system variables.
+        // The init() method of the hardware class does all the work here
         /*
             CHAWKS: On Driver Station, telemetry will be display!
                     Why is this good for the Drivers?
@@ -132,6 +132,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
         initializeDriveMotor();
         initializeGrabberServoMotor();
         initializeRingRollerMotor();
+        initializeArmMotor();
         // Send telemetry message to "Driver Station" signify robot waiting;
         telemetry.addData("Status: ", "Hit [PLAY] to start!");    //
         telemetry.update();
@@ -146,10 +147,12 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 //        encoderDrive(FORWARD, DRIVE_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(LEFT, TURN_SPEED, 12, 12, 5.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-
+        armMotorDrive(1.0);
+        sleep(200);
+        armLifter.setPower(0.0);
         encoderDrive(BACKWARD, DRIVE_SPEED, 2, 2, 0.2);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(200);     // pause
-        encoderDrive(LEFT, TURN_SPEED,  10,  10, 0.43);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(LEFT, TURN_SPEED, 10, 10, 0.42);  // S1: Forward 47 Inches with 5 Sec timeout
         sleep(100);     // pause
         encoderDrive(BACKWARD, DRIVE_SPEED, 12, 12, 0.90);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(20);     // pause
@@ -169,7 +172,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 //        encoderDrive(RIGHT, TURN_SPEED,  12,  12, 1);  // S1: Forward 47 Inches with 5 Sec timeout
 //        sleep(500);     // pause
 //        throwDrive(5);
- //       encoderDrive(BACKWARD, TURN_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
+        //       encoderDrive(BACKWARD, TURN_SPEED,  12,  12, 1.5);  // S1: Forward 47 Inches with 5 Sec timeout
 
         telemetry.addData("Path", "Complete!");
         telemetry.update();
@@ -185,7 +188,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
-    public void encoderDrive( String direction, double speed,
+    public void encoderDrive(String direction, double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
         int newLeftFrontTarget;
@@ -200,17 +203,17 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
          */
         if (opModeIsActive()) {
 
-           //reset all encoder values
+            //reset all encoder values
             leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
             // Determine new target position, and pass to motor controller
-            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(leftInches * Math.abs(COUNTS_PER_INCH));
-            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(leftInches * Math.abs(COUNTS_PER_INCH));
-            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(rightInches * Math.abs(COUNTS_PER_INCH));
-            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(rightInches * Math.abs(COUNTS_PER_INCH));
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int) (leftInches * Math.abs(COUNTS_PER_INCH));
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) (leftInches * Math.abs(COUNTS_PER_INCH));
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int) (rightInches * Math.abs(COUNTS_PER_INCH));
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) (rightInches * Math.abs(COUNTS_PER_INCH));
 
 //            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(QTR_TURN);
 //            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(QTR_TURN);
@@ -225,8 +228,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 //
             // reset the timeout time and start motion.
             runtime.reset();
-            switch (direction)
-            {
+            switch (direction) {
                 case LEFT:
                     leftBackDrive.setTargetPosition(newLeftBackTarget * -1);
                     rightBackDrive.setTargetPosition(newRightBackTarget);
@@ -316,37 +318,37 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 
 //              sleep(5000);   // optional pause after each move
 //
-                // keep looping while we are still active, and there is time left, and both motors are running.
+            // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
             // its target position, the motion will stop.  This is "safer" in the event that the robot will
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()))
+                    (runtime.seconds() < timeoutS) &&
+                    (leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()))
 //            while (leftBackDrive.isBusy() &&
 //                       (runtime.seconds() < timeoutS))
             {
                 // Display it for the driver.
-                telemetry.addData("isbusy",  "right back and left back" + rightBackDrive.isBusy() + " " +  leftBackDrive.isBusy());
-                telemetry.addData("Target",  "Back Running to %7d :%7d", newLeftBackTarget,  newRightBackTarget);
-                telemetry.addData("Back Current",  "Back Running at %7d :%7d",
+                telemetry.addData("isbusy", "right back and left back" + rightBackDrive.isBusy() + " " + leftBackDrive.isBusy());
+                telemetry.addData("Target", "Back Running to %7d :%7d", newLeftBackTarget, newRightBackTarget);
+                telemetry.addData("Back Current", "Back Running at %7d :%7d",
                         leftBackDrive.getCurrentPosition(),
                         rightBackDrive.getCurrentPosition());
-                telemetry.addData("Back Target",  "Back Running at %7d :%7d",
+                telemetry.addData("Back Target", "Back Running at %7d :%7d",
                         leftBackDrive.getTargetPosition(),
                         rightBackDrive.getTargetPosition());
-                telemetry.addData("Target",  "Front Running to %7d :%7d", newLeftFrontTarget,  newRightFrontTarget);
-                telemetry.addData("Front Current",  "Front Running at %7d :%7d",
+                telemetry.addData("Target", "Front Running to %7d :%7d", newLeftFrontTarget, newRightFrontTarget);
+                telemetry.addData("Front Current", "Front Running at %7d :%7d",
                         leftFrontDrive.getCurrentPosition(),
                         rightFrontDrive.getCurrentPosition());
-                telemetry.addData("Front Target",  "Back Running at %7d :%7d",
+                telemetry.addData("Front Target", "Back Running at %7d :%7d",
                         leftFrontDrive.getTargetPosition(),
                         rightFrontDrive.getTargetPosition());
-                telemetry.addData("Speed",  "right back and left back " + rightBackDrive.getPower() + " " +  leftBackDrive.getPower());
-                telemetry.addData("Speed",  "right back and left back " + rightFrontDrive.getPower() + " " +  rightBackDrive.getPower());
-                telemetry.addData("Speed",  "Direction " + direction);
+                telemetry.addData("Speed", "right back and left back " + rightBackDrive.getPower() + " " + leftBackDrive.getPower());
+                telemetry.addData("Speed", "right back and left back " + rightFrontDrive.getPower() + " " + rightBackDrive.getPower());
+                telemetry.addData("Speed", "Direction " + direction);
                 telemetry.update();
             }
 
@@ -367,9 +369,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
     }
 
 
-
-    private void initializeDriveMotor()
-    {
+    private void initializeDriveMotor() {
         leftFrontDrive = hardwareMap.get(DcMotor.class, "LeftFrontDrive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "RightFrontDrive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "LeftBackDrive");
@@ -394,8 +394,7 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 
     }
 
-    private void initializeGrabberServoMotor()
-    {
+    private void initializeGrabberServoMotor() {
 //        leftGrabberServo = hardwareMap.get(Servo.class, "LeftGrabber");
 //        leftGrabberServo.setDirection(Servo.Direction.FORWARD);
 //        leftGrabberServo.setPosition(MAX_POS);
@@ -407,22 +406,18 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
     }
 
 
-    private void initializeRingRollerMotor()
-    {
+    private void initializeRingRollerMotor() {
         ringrollerDrive = hardwareMap.get(DcMotor.class, "RingRoller");
         ringrollerDrive.setDirection(DcMotor.Direction.FORWARD);
         ringrollerDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ringrollerDrive.setPower(0.0);
     }
 
-    private void RingRollerDrive(double timeoutS)
-    {
+    private void RingRollerDrive(double timeoutS) {
         ringrollerDrive.setPower(0.2);
-        if (opModeIsActive())
-        {
+        if (opModeIsActive()) {
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < timeoutS))
-            {
+            while (opModeIsActive() && (runtime.seconds() < timeoutS)) {
                 telemetry.addData("ringrollerDrive", "ringrollerDIR: " + ringrollerDrive.getDirection() + " ringrollerDrive " + ringrollerDrive.getDirection());
                 telemetry.update();
             }
@@ -430,15 +425,13 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
         }
 
     }
-    private void openGrabberClaw(double timeoutS)
-    {
-        if (opModeIsActive())
-        {
+
+    private void openGrabberClaw(double timeoutS) {
+        if (opModeIsActive()) {
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < timeoutS))
-            {
+            while (opModeIsActive() && (runtime.seconds() < timeoutS)) {
 //                telemetry.addData("OpenGrabber", "OpenGrabberDIRleft: " + leftGrabberServo.getDirection() + " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
-                telemetry.addData("OpenGrabber",  " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
+                telemetry.addData("OpenGrabber", " OpenGrabberDIRleft " + rightGrabberServo.getDirection());
                 telemetry.update();
             }
 
@@ -448,4 +441,22 @@ public class BnB_Auto_LeftCarousel_Red extends LinearOpMode {
 
     }
 
+    private void initializeArmMotor() {
+        armLifter = hardwareMap.get(DcMotor.class, "ArmLifter");
+        armLifter.setDirection(DcMotor.Direction.FORWARD);
+        armLifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armLifter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    private void armMotorDrive(double timeoutS)
+    {
+        if (opModeIsActive()) {
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < timeoutS)) {
+                telemetry.addData("armDriveMotor", " ArmDriveMotor " + armLifter.getDirection());
+                telemetry.update();
+            }
+            armLifter.setPower(-0.4);
+        }
+    }
 }

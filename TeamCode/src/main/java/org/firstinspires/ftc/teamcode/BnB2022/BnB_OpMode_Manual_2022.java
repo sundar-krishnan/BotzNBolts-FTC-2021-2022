@@ -301,9 +301,9 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
 
         rightGrabberServo = hardwareMap.get(Servo.class, "RightGrabber");
         rightGrabberServo.setDirection(Servo.Direction.REVERSE);
-        rightGrabberServo.setPosition(MIN_POS);
+        rightGrabberServo.setPosition(MAX_POS);
 
-        position = MIN_POS;
+        position = MAX_POS;
     }
 
 //    private void initializeCollectorServoMotor()
