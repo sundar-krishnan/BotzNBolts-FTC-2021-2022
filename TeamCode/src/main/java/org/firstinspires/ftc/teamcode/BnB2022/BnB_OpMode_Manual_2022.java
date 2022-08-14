@@ -286,9 +286,9 @@ public class BnB_OpMode_Manual_2022 extends LinearOpMode {
     private void RingRollerDrive()
     {
         if (gamepad1.left_bumper)
-            ringrollerDrive.setPower(-0.2);
+            ringrollerDrive.setPower(-0.4);
         else if(gamepad1.right_bumper)
-            ringrollerDrive.setPower(0.2);
+            ringrollerDrive.setPower(0.4);
         else
             ringrollerDrive.setPower(0.0);
     }
